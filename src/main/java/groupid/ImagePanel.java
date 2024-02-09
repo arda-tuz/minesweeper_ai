@@ -101,6 +101,8 @@ public class ImagePanel extends JPanel {
             Image yellow9 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\yellow9.jpg")).getImage();
 
             Image mainMenuBlue = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\mainMenuBlue.png")).getImage();
+            Image greenM = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\greenM.jpg")).getImage();
+            Image greenF = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\greenF.jpg")).getImage();
 
 
             imageList.add(tile_0);
@@ -159,6 +161,8 @@ public class ImagePanel extends JPanel {
             imageList.add(yellow9);
 
             imageList.add(mainMenuBlue);
+            imageList.add(greenM);
+            imageList.add(greenF);
         
         } catch (Exception e) {
 
@@ -167,7 +171,7 @@ public class ImagePanel extends JPanel {
     }
 
     @Override
-        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 50
+        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 52
 
             super.paintComponent(g);
 
@@ -316,6 +320,14 @@ public class ImagePanel extends JPanel {
                 else if(this.imageHash.equals("mainMenuBlue")){
 
                     g.drawImage(imageList.get(50), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("greenM")){
+
+                    g.drawImage(imageList.get(51), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("greenF")){
+
+                    g.drawImage(imageList.get(52), 0, 0, getWidth(), getHeight(), this);
                 }
                 else{
                     

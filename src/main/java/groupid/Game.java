@@ -28,7 +28,7 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
     public boolean isGameOver = false;
     public boolean isGameWon = false;
     
-    ImagePanel gamePlayGridPanel;
+    public ImagePanel gamePlayGridPanel;
 
     public int mineNumber;
     public int satirSize;
@@ -711,7 +711,6 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
             }
             
             this.gamePlayGridPanel.repaint();
-
             this.isGameOver = true;
             this.initialize_cl_endgame("lose");
             this.changePeekButton();
@@ -722,6 +721,22 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
         if(this.openedCount == this.goalCount){ 
 
+            for(int i = 0; i < satirSize; i++){
+
+                for(int j = 0; j < sutunSize; j++){
+
+                    if(mineBoard[i][j] == 'm' && userBoard[i][j] != 'f'){
+
+                        tileBoard[i][j].imageHash = "greenM";
+                    }
+                    else if(mineBoard[i][j] == 'm' && userBoard[i][j] == 'f'){
+
+                        tileBoard[i][j].imageHash = "greenF";
+                    }
+                }
+            }
+
+            this.gamePlayGridPanel.repaint();
             this.isGameWon = true;
             this.initialize_cl_endgame("win");
             this.changePeekButton();
@@ -838,24 +853,28 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         ImagePanel innerSouthPanel_left = new ImagePanel(mainFrame);
         ImagePanel innerSouthPanel_right = new ImagePanel(mainFrame);
 
-        JLabel endGameTextLabelRight = new JLabel("" + this.goalCount + " / " + "" + this.openedCount);
-        endGameTextLabelRight.setFont(new Font("Courier New", Font.BOLD, 20));
+        JLabel endGameTextLabelRight = new JLabel("" + this.openedCount + " / " + "" + this.goalCount);
+        endGameTextLabelRight.setFont(new Font("Courier New", Font.BOLD, 40));
         JLabel endGameTextLabelLeft = new JLabel("Progress : ");
-        endGameTextLabelLeft.setFont(new Font("Courier New", Font.BOLD, 20));
+        endGameTextLabelLeft.setFont(new Font("Courier New", Font.BOLD, 40));
 
-        MyJbutton restartGameButton = new MyJbutton(mainFrame, "Restart game");
-        restartGameButton.setBackground(mainFrame.lightBlue);
+        MyJbutton restartGameButton = new MyJbutton(mainFrame, "Restart");
+        restartGameButton.setBackground(this.mainFrame.greyBlue);
+        restartGameButton.boyansinMi = true;
+        restartGameButton.setForeground(Color.black);
         restartGameButton.setActionCommand("restartGame");
-        restartGameButton.setFont(new Font("Courier New", Font.ITALIC, 20));
+        restartGameButton.setFont(new Font("Courier New", Font.ITALIC, 60));
 
         ImagePanel araPanel = new ImagePanel(mainFrame);
-        Dimension preferredSize = new Dimension(20, araPanel.getPreferredSize().height); 
+        Dimension preferredSize = new Dimension(40, araPanel.getPreferredSize().height); 
         araPanel.setPreferredSize(preferredSize);
 
-        MyJbutton mainMenuButton = new MyJbutton(mainFrame, "Main menu");
-        mainMenuButton.setBackground(mainFrame.lightBlue);
+        MyJbutton mainMenuButton = new MyJbutton(mainFrame, "Menu");
+        mainMenuButton.setForeground(Color.black);
+        mainMenuButton.setBackground(this.mainFrame.greyBlue);
+        mainMenuButton.boyansinMi = true;
         mainMenuButton.setActionCommand("mainMenu");
-        mainMenuButton.setFont(new Font("Courier New", Font.ITALIC, 20));
+        mainMenuButton.setFont(new Font("Courier New", Font.ITALIC, 60));
 
         outerSouthPanel.add(restartGameButton);
         outerSouthPanel.add(araPanel);
