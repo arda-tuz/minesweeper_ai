@@ -1,10 +1,7 @@
 package groupid;
 import javax.swing.*;
-import javax.swing.border.Border;
-
 import java.awt.*;
 import java.io.*;
-import java.lang.ref.Cleaner.Cleanable;
 import java.util.*;
 
 /* 
@@ -500,14 +497,17 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
                 this.writeToFile(); //? write the mine map to a file again because the mine map has changed
 
-                //? run the peek algo again bacause the mine map has changed 
-                for(int i = 0; i < satirSize; i ++){
+                if(this.isPeekModeOn){
 
-                    for(int j = 0; j < sutunSize; j++){
-    
-                        if(userBoard[i][j] == 'c' && mineBoard[i][j] == 'm'){
-    
-                            tileBoard[i][j].imageHash = "peek";
+                    //? run the peek algo again bacause the mine map has changed 
+                    for(int i = 0; i < satirSize; i ++){
+
+                        for(int j = 0; j < sutunSize; j++){
+        
+                            if(userBoard[i][j] == 'c' && mineBoard[i][j] == 'm'){
+        
+                                tileBoard[i][j].imageHash = "peek";
+                            }
                         }
                     }
                 }
@@ -523,10 +523,8 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         if(this.isGameOver || this.isGameWon){
 
             return;
-        }      
-
-        checkGameOver(x, y);
-
+        }  
+        
         if(ffIsVisitedArr[x][y] == true){ //? if we visited before return 
 
             return;
@@ -537,6 +535,13 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         }
         if(userBoard[x][y] == 'f'){ //? if flagged return
             
+            return;
+        }
+
+        checkGameOver(x, y);
+
+        if(this.isGameOver){
+
             return;
         }
 
@@ -555,7 +560,12 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
             this.openedCount ++;
 
-            checkGameWon(); 
+            checkGameWon();
+
+            if(this.isGameWon){
+
+                return;
+            }
         }
         if(adjacentMineNumber == '0'){
 
@@ -572,6 +582,11 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
             this.openedCount ++;
 
             checkGameWon();
+
+            if(this.isGameWon){
+
+                return;
+            }
 
             if(x == 0 && y == 0)// sol ust kose 
             {
@@ -607,7 +622,7 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
                 
                 openTile(1, yBoy -1);
             }
-            else if(y == 0 && x != 0 && x != xBoy-1) //sol kenar  //!!!!!
+            else if(y == 0 && x != 0 && x != xBoy-1) //sol kenar  
             {
                 
                 openTile(x-1, 0);
@@ -744,8 +759,6 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
     }
 
     public void flagTile(int x, int y){
-
-        //printMineBoard();  //! for debug purposes only 
 
         if(this.isGameOver == true || this.isGameWon == true){
 
