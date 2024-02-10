@@ -19,7 +19,7 @@ public class MainFrame extends JFrame implements WindowListener{
     public HashMap<String, ImagePanel> clPanelMap;
     public CardLayout cl;
 
-    public Game game;
+    public Game game = null;
     
     public String fixPath(String path){
 
@@ -35,16 +35,16 @@ public class MainFrame extends JFrame implements WindowListener{
 
         //     "7" tane sliding panel var 
         ImagePanel cl_menu  = new ImagePanel(this);
-        ImagePanel cl_game = new ImagePanel(this);
-        ImagePanel cl_endgame = new ImagePanel(this);
+        // ImagePanel cl_game = new ImagePanel(this);
+        // ImagePanel cl_endgame = new ImagePanel(this);
         ImagePanel cl_win7 = new ImagePanel(this);
         ImagePanel cl_number = new ImagePanel(this);
         ImagePanel cl_mouse = new ImagePanel(this);
         ImagePanel cl_close = new ImagePanel(this);
 
         clPanel.add(cl_menu, "cl_menu");
-        clPanel.add(cl_game,"cl_game");
-        clPanel.add(cl_endgame, "cl_endgame");
+        // clPanel.add(cl_game,"cl_game");
+        // clPanel.add(cl_endgame, "cl_endgame");
         clPanel.add(cl_win7, "cl_win7");
         clPanel.add(cl_number,"cl_number");
         clPanel.add(cl_mouse, "cl_mouse");
@@ -54,8 +54,8 @@ public class MainFrame extends JFrame implements WindowListener{
         this.clPanelMap = new HashMap<>(7);
         
         clPanelMap.put("cl_menu", cl_menu);
-        clPanelMap.put("cl_game", cl_game);
-        clPanelMap.put("cl_endgame", cl_endgame);
+        // clPanelMap.put("cl_game", cl_game);
+        // clPanelMap.put("cl_endgame", cl_endgame);
         clPanelMap.put("cl_win7", cl_win7);
         clPanelMap.put("cl_number", cl_number);
         clPanelMap.put("cl_mouse", cl_mouse);
@@ -166,19 +166,19 @@ public class MainFrame extends JFrame implements WindowListener{
         upButton.setBackground(mainFrame.greyBlue);
         upButton.setActionCommand("beginner");
         cl_win7.buttonMap.put("win7Button", upButton);
-        upButton.setFont(new Font("Serif", Font.BOLD, 25));
+        upButton.setFont(new Font("Serif", Font.BOLD, 35));
 
         MyJbutton middleButton = new MyJbutton(mainFrame, "<html><u>INTERMEDIATE</u>~  16x16 board with 40 mines</html>");
         middleButton.setBackground(mainFrame.greyBlue);
         middleButton.setActionCommand("intermediate");
         cl_win7.buttonMap.put("numberButton", middleButton);
-        middleButton.setFont(new Font("Serif", Font.BOLD, 25));
+        middleButton.setFont(new Font("Serif", Font.BOLD, 33));
 
         MyJbutton downButton = new MyJbutton(mainFrame, "<html><u>EXPERT</u>~  30x16 board with 99 mines</html>");
         downButton.setBackground(mainFrame.greyBlue);
         downButton.setActionCommand("expert");
         cl_win7.buttonMap.put("mouseButton", downButton);
-        downButton.setFont(new Font("Serif", Font.BOLD, 25));
+        downButton.setFont(new Font("Serif", Font.BOLD, 35));
 
         upButton.boyansinMi = true; middleButton.boyansinMi = true; downButton.boyansinMi = true;
         upPanel.add(upButton); middlePanel.add(middleButton); downPanel.add(downButton);
@@ -204,9 +204,9 @@ public class MainFrame extends JFrame implements WindowListener{
         cl_close.buttonMap.put("yesButton", yesButton);
         yesButton.setFont(new Font("Serif", Font.BOLD, 90));
 
-        ImagePanel araPanel = new ImagePanel(mainFrame);   
-        Dimension preferredSize = new Dimension(200, araPanel.getPreferredSize().height); 
-        araPanel.setPreferredSize(preferredSize);
+        // ImagePanel araPanel = new ImagePanel(mainFrame);   
+        // Dimension preferredSize = new Dimension(200, araPanel.getPreferredSize().height); 
+        // araPanel.setPreferredSize(preferredSize);
 
         MyJbutton noButton = new MyJbutton(mainFrame, "NO");
         noButton.setBackground(this.greyBlue);
@@ -220,7 +220,20 @@ public class MainFrame extends JFrame implements WindowListener{
         noButton.boyansinMi = true;
 
         cl_close_south_panel.add(yesButton);
-        cl_close_south_panel.add(araPanel);
+        // cl_close_south_panel.add(araPanel);
+
+        ImagePanel menuPanel = new ImagePanel(mainFrame, "menuIcon");
+
+        PanelButtonListener panelButtonListener4  = new PanelButtonListener(mainFrame, null, null, null, 
+        menuPanel   ,"menu");
+        menuPanel.addMouseListener(panelButtonListener4);
+        menuPanel.addMouseMotionListener(panelButtonListener4);
+  
+        Dimension preferredSize = new Dimension(200, 125); 
+        menuPanel.setPreferredSize(preferredSize);
+
+        cl_close_south_panel.add(menuPanel);
+
         cl_close_south_panel.add(noButton);
     }
 ///?====================================================================================================================================

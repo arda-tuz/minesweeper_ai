@@ -10,7 +10,8 @@ import javax.swing.event.MouseInputListener;
 public class TilePanel extends ImagePanel implements MouseInputListener{
 
     Pair pair;
-    int whichKindOfPanel;        //!    0 = oyunun oynandigi normal game panaller // 1 = mouse mode icin secim yapilan paneller   
+    int whichKindOfPanel;        
+    //!    0 = oyunun oynandigi normal game panaller // 1 = mouse mode icin secim yapilan paneller   
 
     public TilePanel(MainFrame mainFrame, int satir, int sutun){
 

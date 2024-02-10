@@ -11,10 +11,19 @@ import java.util.*;
 */
 
 public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface olarak duracak
-    
+
+    public CardLayout clPeek;
+    public ImagePanel startPanelRightClContainer;
+    public ImagePanel timePanel;
+    public CardLayout clTimePanel;
+    public ImagePanel timePanelWinLose;
+
     public MainFrame mainFrame;
     public ImagePanel gamePanel;
     public JLabel mineCounterTextLabel;
+    public boolean isAiStarted = false;
+
+    public int[] restartInformationArr;
 
     public boolean isPeekModeOn = false;
 
@@ -49,8 +58,15 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
     public Game(MainFrame mainFrame, int mineNumber, int satirSize, int sutunSize){
 
+        //?         restart game yapinca onceki oyunun bilgileri buradan alinacak
+        this.restartInformationArr = new int[3];
+        this.restartInformationArr[0] = mineNumber;
+        this.restartInformationArr[1] = satirSize;      
+        this.restartInformationArr[2] = sutunSize;
+
         this.mainFrame = mainFrame;
-        this.gamePanel = mainFrame.clPanelMap.get("cl_game"); // Hizli erisebilmek icin gamePanel instance yaptim 
+        this.gamePanel = new ImagePanel(mainFrame);
+        this.mainFrame.clPanelMap.put("cl_game", gamePanel); // Hizli erisebilmek icin gamePanel instance yaptim 
 
         //? initialize the srcFile to write mine map on it 
         this.srcFile =  new File(mainFrame.fixPath("src\\main\\resources\\mineMapFile.txt")); 
@@ -77,9 +93,8 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
     public void initialize_cl_game(){   //?     cl_game'e ait tum compenentlar run time da burada yaratilcak ve ayarlancak !!!
 
-        HashMap<String, ImagePanel> clPanelMap = this.mainFrame.clPanelMap;
+        ImagePanel cl_game = this.gamePanel;
 
-        ImagePanel cl_game = clPanelMap.get("cl_game");
         cl_game.setLayout(new BorderLayout());
 
         this.gamePlayGridPanel = new ImagePanel(mainFrame);
@@ -96,29 +111,59 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         southPanel.setLayout(new GridLayout(1, 3));
 
         ImagePanel mineCountPanel = new ImagePanel(mainFrame, "blackBorder");
-        ImagePanel timePanel = new ImagePanel(mainFrame, "blackBorder");  
+        this.timePanel = new ImagePanel(mainFrame);  
         ImagePanel startPanel = new ImagePanel(mainFrame);
-        startPanel.setLayout(new FlowLayout());
+        startPanel.setLayout(new GridLayout(1,2));
 
         southPanel.add(mineCountPanel); southPanel.add(timePanel); southPanel.add(startPanel);
 
-        MyJbutton startGameButton = new MyJbutton(mainFrame, "START");
-        startPanel.add(startGameButton);
-        startGameButton.setFont(new Font("Serif", Font.BOLD, 25));
-        startGameButton.setActionCommand("startGame");
-        startGameButton.setBackground(mainFrame.greyBlue);
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        MyJbutton peekGameButton = new MyJbutton(mainFrame, "PEEK");
-        startPanel.add(peekGameButton);
-        peekGameButton.setFont(new Font("Serif", Font.ITALIC, 25));
-        peekGameButton.setActionCommand("peek");
-        peekGameButton.setBackground(mainFrame.lighterGreyBlue);
+        ImagePanel startPanelLeftContainer = new ImagePanel(mainFrame, "startOpen");
+        startPanel.add(startPanelLeftContainer);
+
+        this.startPanelRightClContainer = new ImagePanel(mainFrame);
+        this.clPeek = new CardLayout();
+        startPanelRightClContainer.setLayout(clPeek);
+
+        ImagePanel cardPanelPeek = new ImagePanel(mainFrame, "eyeClosed");
+        ImagePanel cardPanelEnd = new ImagePanel(mainFrame);
+        cardPanelEnd.setLayout(new GridLayout(1,2));
+
+        ImagePanel cardPanelEndLeft = new ImagePanel(mainFrame, "restart"); 
+        ImagePanel cardPanelEndRight = new ImagePanel(mainFrame, "menuIcon");
+        cardPanelEnd.add(cardPanelEndLeft); cardPanelEnd.add(cardPanelEndRight);
+
+        startPanelRightClContainer.add(cardPanelPeek, "peekMode"); //?   peek olayi icin eye icon gosterilir
+        startPanelRightClContainer.add(cardPanelEnd,"endMode");   //?   oyun bitince restart ve main menu icon gosterilir
+
+        startPanel.add(startPanelRightClContainer);
+        clPeek.show(startPanelRightClContainer, "peekMode");
+
+        PanelButtonListener panelButtonListener1 = new PanelButtonListener(mainFrame, cardPanelPeek, startPanelLeftContainer, cardPanelEndLeft, cardPanelEndRight
+        ,"peek");
+        cardPanelPeek.addMouseListener(panelButtonListener1);
+        cardPanelPeek.addMouseMotionListener(panelButtonListener1);
+
+        PanelButtonListener panelButtonListener2  = new PanelButtonListener(mainFrame, cardPanelPeek, startPanelLeftContainer, cardPanelEndLeft, cardPanelEndRight
+        ,"start");
+        startPanelLeftContainer.addMouseListener(panelButtonListener2);
+        startPanelLeftContainer.addMouseMotionListener(panelButtonListener2);
+
+        PanelButtonListener panelButtonListener3  = new PanelButtonListener(mainFrame, cardPanelPeek, startPanelLeftContainer, cardPanelEndLeft, cardPanelEndRight
+        ,"restart");
+        cardPanelEndLeft.addMouseListener(panelButtonListener3);
+        cardPanelEndLeft.addMouseMotionListener(panelButtonListener3);
+
+        PanelButtonListener panelButtonListener4  = new PanelButtonListener(mainFrame, cardPanelPeek, startPanelLeftContainer, cardPanelEndLeft, cardPanelEndRight
+        ,"menu");
+        cardPanelEndRight.addMouseListener(panelButtonListener4);
+        cardPanelEndRight.addMouseMotionListener(panelButtonListener4);
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         cl_game.add(gamePlayGridPanel, BorderLayout.CENTER);
         cl_game.add(southPanel, BorderLayout.SOUTH);
-
-        cl_game.buttonMap.put("startGameButton", startGameButton);
-        cl_game.buttonMap.put("peekGameButton", peekGameButton);
 
         cl_game.panelMap.put("gamePlayGridPanel", gamePlayGridPanel);
         cl_game.panelMap.put("southPanel", southPanel);
@@ -126,8 +171,19 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         cl_game.panelMap.put("timePanel", timePanel);
         cl_game.panelMap.put("startPanel", startPanel);
 
-        timePanel.setLayout(new  GridLayout(1,2));
+
+        this.clTimePanel = new CardLayout();
+        this.timePanel.setLayout(this.clTimePanel);
+        ImagePanel timePanelCl1 = new ImagePanel(mainFrame, "blackBorder"); //? bu dice ve saati tuan card
+        this.timePanel.add(timePanelCl1, "game");
+
+        this.timePanelWinLose = new ImagePanel(mainFrame);    //? bu win / lose yazisini tutan card
+        this.timePanel.add(timePanelWinLose, "endGame");
+
+        timePanelCl1.setLayout(new  GridLayout(1,2));
         mineCountPanel.setLayout(new GridLayout(1,2));
+
+        this.clTimePanel.show(this.timePanel, "game"); //? ilk basta dice ve saat tutan card ile baslanir hep
 
         ImagePanel mineCounterImagePanel = new ImagePanel(mainFrame, "mineCounter");
         ImagePanel mineCounterTextPanel = new ImagePanel(mainFrame);
@@ -144,7 +200,7 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         threadLeftPanel.isThreadPanel = true;
         ImagePanel threadRightPanel = new ImagePanel(mainFrame, "clock1");
         threadRightPanel.isThreadPanel = true;
-        timePanel.add(threadLeftPanel); timePanel.add(threadRightPanel);
+        timePanelCl1.add(threadLeftPanel); timePanelCl1.add(threadRightPanel);
         cl_game.panelMap.put("threadLeftPanel", threadLeftPanel);
         cl_game.panelMap.put("threadRightPanel",threadRightPanel);
 
@@ -154,8 +210,28 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
         //      will go on ....
 
+        this.mainFrame.clPanel.add(cl_game,"cl_game");
+
         this.mainFrame.cl.show(mainFrame.clPanel, "cl_game");
         mainFrame.currentPanel = "cl_game";
+    }
+
+    private void initializeEndGameSequence(String winOrLose){ // "win" // "lose" olarak input alcak
+
+        if(winOrLose.equals("win")){
+
+            this.clPeek.show(this.startPanelRightClContainer, "endMode");
+            this.timePanelWinLose.imageHash = "youWin";
+            this.clTimePanel.show(this.timePanel, "endGame");
+        }
+        else{
+
+            this.clPeek.show(this.startPanelRightClContainer, "endMode");
+            this.timePanelWinLose.imageHash = "youLose";
+            this.clTimePanel.show(this.timePanel, "endGame");
+        }
+
+        this.timePanel.repaint();
     }
 
     private void writeToFile(){
@@ -698,18 +774,6 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         }
     }
 
-    private void changePeekButton(){
-
-        MyJbutton peekButton = this.gamePanel.buttonMap.get("peekGameButton");
-
-        peekButton.boyansinMi = false;
-        peekButton.pressedColor = this.mainFrame.orange;
-        peekButton.setActionCommand("createEndGame");
-        peekButton.setText("Finish");
-        peekButton.setBackground(this.mainFrame.orange);
-        peekButton.repaint();
-    }   
-
     private void checkGameOver(int x, int y){   //? check if we stepper overa  mine or not 
 
         if(mineBoard[x][y] == 'm'){
@@ -727,8 +791,7 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
             
             this.gamePlayGridPanel.repaint();
             this.isGameOver = true;
-            this.initialize_cl_endgame("lose");
-            this.changePeekButton();
+            this.initializeEndGameSequence("lose");
         }  
     }
 
@@ -753,8 +816,7 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
             this.gamePlayGridPanel.repaint();
             this.isGameWon = true;
-            this.initialize_cl_endgame("win");
-            this.changePeekButton();
+            this.initializeEndGameSequence("win");
         }
     }
 
@@ -850,70 +912,5 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         gamePlayGridPanel.repaint();
     }
 
-    private void initialize_cl_endgame(String winOrLose){ // "win" // "lose" olarak input alcak
-
-        ImagePanel cl_endgame = this.mainFrame.clPanelMap.get("cl_endgame");
-        cl_endgame.setLayout(new BorderLayout());    
-
-        ImagePanel centerBorderPanel = new ImagePanel(mainFrame);
-        centerBorderPanel.setLayout(new BorderLayout());
-
-        ImagePanel outerSouthPanel = new ImagePanel(mainFrame);
-        ImagePanel innerSouthPanel = new ImagePanel(mainFrame);
-        outerSouthPanel.setLayout(new FlowLayout());
-        innerSouthPanel.setLayout(new GridLayout(1,2));
-
-        ImagePanel innerSouthPanel_left = new ImagePanel(mainFrame);
-        ImagePanel innerSouthPanel_right = new ImagePanel(mainFrame);
-
-        JLabel endGameTextLabelRight = new JLabel("" + this.openedCount + " / " + "" + this.goalCount);
-        endGameTextLabelRight.setFont(new Font("Courier New", Font.BOLD, 40));
-        JLabel endGameTextLabelLeft = new JLabel("Progress : ");
-        endGameTextLabelLeft.setFont(new Font("Courier New", Font.BOLD, 40));
-
-        MyJbutton restartGameButton = new MyJbutton(mainFrame, "Restart");
-        restartGameButton.setBackground(this.mainFrame.greyBlue);
-        restartGameButton.boyansinMi = true;
-        restartGameButton.setForeground(Color.black);
-        restartGameButton.setActionCommand("restartGame");
-        restartGameButton.setFont(new Font("Courier New", Font.ITALIC, 60));
-
-        ImagePanel araPanel = new ImagePanel(mainFrame);
-        Dimension preferredSize = new Dimension(40, araPanel.getPreferredSize().height); 
-        araPanel.setPreferredSize(preferredSize);
-
-        MyJbutton mainMenuButton = new MyJbutton(mainFrame, "Menu");
-        mainMenuButton.setForeground(Color.black);
-        mainMenuButton.setBackground(this.mainFrame.greyBlue);
-        mainMenuButton.boyansinMi = true;
-        mainMenuButton.setActionCommand("mainMenu");
-        mainMenuButton.setFont(new Font("Courier New", Font.ITALIC, 60));
-
-        outerSouthPanel.add(restartGameButton);
-        outerSouthPanel.add(araPanel);
-        outerSouthPanel.add(mainMenuButton);
-
-        ImagePanel youWinLosePanel = null;
-
-        if(winOrLose.equals("win")){
-
-            youWinLosePanel = new ImagePanel(mainFrame, "youWin");
-        }
-        else{
-
-            youWinLosePanel = new ImagePanel(mainFrame, "youLose");
-        }
-
-        centerBorderPanel.add(youWinLosePanel, BorderLayout.CENTER);
-        centerBorderPanel.add(innerSouthPanel, BorderLayout.SOUTH); 
-
-        cl_endgame.add(centerBorderPanel, BorderLayout.CENTER);
-        cl_endgame.add(outerSouthPanel, BorderLayout.SOUTH);
-
-        innerSouthPanel.add(innerSouthPanel_left); innerSouthPanel.add(innerSouthPanel_right);
-        innerSouthPanel_left.add(endGameTextLabelLeft); innerSouthPanel_right.add(endGameTextLabelRight);
-
-        cl_endgame.repaint();
-    }
 }
 

@@ -80,15 +80,7 @@ public class MyJbutton extends JButton implements ActionListener, MouseInputList
         else if(e.getActionCommand().equals("expert")){
 
             mainFrame.initializeGame(mainFrame, 99 , 30, 16);
-        }
-        else if(e.getActionCommand().equals("startGame")){
-
-            //TODO ai'a start signal burdan gidecek // ai objesi burada create edilecek tek class tek obje calisacak 
-        }
-        else if(e.getActionCommand().equals("peek")){
-
-            this.mainFrame.game.peek();
-        }   
+        }  
         else if(e.getActionCommand().equals("quitYes")){
 
             System.exit(0);
@@ -96,21 +88,6 @@ public class MyJbutton extends JButton implements ActionListener, MouseInputList
         else if(e.getActionCommand().equals("quitNo")){
 
             this.mainFrame.cl.show(this.mainFrame.clPanel, this.mainFrame.currentPanel);
-        }
-        else if(e.getActionCommand().equals("restartGame")){
-
-            //TODO   RESTART GAME YAPILACAK
-        }
-        else if(e.getActionCommand().equals("mainMenu")){
-
-            this.mainFrame.game = null;  // delete the older game object 
-            this.mainFrame.cl.show(mainFrame.clPanel, "cl_menu");
-            mainFrame.currentPanel = "cl_menu";
-        }   
-        else if(e.getActionCommand().equals("createEndGame")){
-
-            this.mainFrame.cl.show(this.mainFrame.clPanel, "cl_endgame");
-            mainFrame.currentPanel = "cl_endgame";
         }
         else if(e.getActionCommand().equals("")){
 

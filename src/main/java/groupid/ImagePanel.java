@@ -6,7 +6,12 @@ import javax.swing.*;
 
 
 public class ImagePanel extends JPanel {
-    
+
+    public boolean isStartButton = false;
+    public boolean isRestartButton = false;
+    public boolean isMenuButton = false;
+    public boolean isPeekButton = false;
+
     MainFrame mainFrame;
 
     public HashMap<String, ImagePanel> panelMap;
@@ -104,6 +109,21 @@ public class ImagePanel extends JPanel {
             Image greenM = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\greenM.jpg")).getImage();
             Image greenF = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\greenF.jpg")).getImage();
 
+            Image startOpenIcon = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\startOpenIcon.jpg")).getImage();
+            Image startClosedIcon = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\startClosedIcon.jpg")).getImage();
+            Image restartIcon = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\restartIcon.jpg")).getImage();
+            Image eyeOpenIcon = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\eyeOpenIcon.jpg")).getImage();
+            Image eyeClosedIcon = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\eyeClosedIcon.jpg")).getImage();
+            Image menuIcon = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\menuIcon.jpg")).getImage();
+
+            Image whiteBlueDarker1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\whiteBlueDarker1.png")).getImage();
+            Image startOpenIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\startOpenIcon2.jpg")).getImage();
+            Image startClosedIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\startClosedIcon2.jpg")).getImage();
+            Image restartIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\restartIcon2.jpg")).getImage();
+            Image eyeOpenIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\eyeOpenIcon2.jpg")).getImage();
+            Image eyeClosedIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\eyeClosedIcon2.jpg")).getImage();
+            Image menuIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\menuIcon2.jpg")).getImage();
+
 
             imageList.add(tile_0);
             imageList.add(tile_1);
@@ -163,6 +183,21 @@ public class ImagePanel extends JPanel {
             imageList.add(mainMenuBlue);
             imageList.add(greenM);
             imageList.add(greenF);
+
+            imageList.add(startOpenIcon);
+            imageList.add(startClosedIcon);
+            imageList.add(restartIcon);
+            imageList.add(eyeOpenIcon);
+            imageList.add(eyeClosedIcon);
+            imageList.add(menuIcon);
+
+            imageList.add(whiteBlueDarker1);
+            imageList.add(startOpenIcon2);
+            imageList.add(startClosedIcon2);
+            imageList.add(restartIcon2);
+            imageList.add(eyeOpenIcon2);
+            imageList.add(eyeClosedIcon2);
+            imageList.add(menuIcon2);
         
         } catch (Exception e) {
 
@@ -171,7 +206,7 @@ public class ImagePanel extends JPanel {
     }
 
     @Override
-        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 52
+        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 58
 
             super.paintComponent(g);
 
@@ -329,8 +364,59 @@ public class ImagePanel extends JPanel {
 
                     g.drawImage(imageList.get(52), 0, 0, getWidth(), getHeight(), this);
                 }
+                else if(this.imageHash.equals("startOpen")){
+
+                    g.drawImage(imageList.get(53), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("startClosed")){
+
+                    g.drawImage(imageList.get(54), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("restart")){
+
+                    g.drawImage(imageList.get(55), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("eyeOpen")){
+
+                    g.drawImage(imageList.get(56), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("eyeClosed")){
+
+                    g.drawImage(imageList.get(57), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("menuIcon")){
+
+                    g.drawImage(imageList.get(58), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("whiteBlueDarker1")){
+
+                    g.drawImage(imageList.get(59), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("startOpen2")){
+
+                    g.drawImage(imageList.get(60), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("startClosed2")){
+
+                    g.drawImage(imageList.get(61), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("restart2")){
+
+                    g.drawImage(imageList.get(62), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("eyeOpen2")){
+
+                    g.drawImage(imageList.get(63), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("eyeClosed2")){
+
+                    g.drawImage(imageList.get(64), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("menuIcon2")){
+
+                    g.drawImage(imageList.get(65), 0, 0, getWidth(), getHeight(), this);
+                }
                 else{
-                    
                 }
             }
             else{   //? THREAD = TRUE
