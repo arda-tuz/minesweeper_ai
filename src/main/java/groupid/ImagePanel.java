@@ -124,6 +124,13 @@ public class ImagePanel extends JPanel {
             Image eyeClosedIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\eyeClosedIcon2.jpg")).getImage();
             Image menuIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\menuIcon2.jpg")).getImage();
 
+            Image clock0 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock0.jpg")).getImage();
+            Image windowsIcon1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\windowsIcon1.jpg")).getImage();
+            Image windowsIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\windowsIcon2.jpg")).getImage();
+            Image customIcon1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\customIcon1.jpg")).getImage();
+            Image customIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\customIcon2.jpg")).getImage();
+
+
 
             imageList.add(tile_0);
             imageList.add(tile_1);
@@ -198,6 +205,12 @@ public class ImagePanel extends JPanel {
             imageList.add(eyeOpenIcon2);
             imageList.add(eyeClosedIcon2);
             imageList.add(menuIcon2);
+
+            imageList.add(clock0);
+            imageList.add(windowsIcon1);
+            imageList.add(windowsIcon2);
+            imageList.add(customIcon1);
+            imageList.add(customIcon2);
         
         } catch (Exception e) {
 
@@ -206,7 +219,7 @@ public class ImagePanel extends JPanel {
     }
 
     @Override
-        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 58
+        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 70
 
             super.paintComponent(g);
 
@@ -416,6 +429,22 @@ public class ImagePanel extends JPanel {
 
                     g.drawImage(imageList.get(65), 0, 0, getWidth(), getHeight(), this);
                 }
+                else if(this.imageHash.equals("windowsIcon1")){
+
+                    g.drawImage(imageList.get(67), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("windowsIcon2")){
+
+                    g.drawImage(imageList.get(68), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("customIcon1")){
+
+                    g.drawImage(imageList.get(69), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("customIcon2")){
+
+                    g.drawImage(imageList.get(70), 0, 0, getWidth(), getHeight(), this);
+                }
                 else{
                 }
             }
@@ -480,6 +509,10 @@ public class ImagePanel extends JPanel {
                 else if(this.imageHash.equals("clock12")){
     
                     g.drawImage(imageList.get(30), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("clock0")){
+    
+                    g.drawImage(imageList.get(66), 0, 0, getWidth(), getHeight(), this);
                 }
                 else{
                     

@@ -54,22 +54,23 @@ public class MyJbutton extends JButton implements ActionListener, MouseInputList
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        if(e.getActionCommand().equals("win7")){
+        // if(e.getActionCommand().equals("win7")){
 
-            mainFrame.cl.show(mainFrame.clPanel, "cl_win7");
-            mainFrame.currentPanel = "cl_win7";
-        }
-        else if(e.getActionCommand().equals("number")){
+        //     mainFrame.cl.show(mainFrame.clPanel, "cl_win7");
+        //     mainFrame.currentPanel = "cl_win7";
+        // }
+        // else if(e.getActionCommand().equals("number")){
 
-            mainFrame.cl.show(mainFrame.clPanel,"cl_number");
-            mainFrame.currentPanel = "cl_number";
-        }
-        else if(e.getActionCommand().equals("mouse")){
+        //     mainFrame.cl.show(mainFrame.clPanel,"cl_number");
+        //     mainFrame.currentPanel = "cl_number";
+        // }
+        // else if(e.getActionCommand().equals("mouse")){
 
-            mainFrame.cl.show(mainFrame.clPanel, "cl_mouse");
-            mainFrame.currentPanel = "cl_mouse";
-        }
-        else if(e.getActionCommand().equals("beginner")){   
+        //     mainFrame.cl.show(mainFrame.clPanel, "cl_mouse");
+        //     mainFrame.currentPanel = "cl_mouse";
+        // }
+        
+        if(e.getActionCommand().equals("beginner")){   
 
             mainFrame.initializeGame(mainFrame, 10 , 9  , 9);
         }

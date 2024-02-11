@@ -18,6 +18,12 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
     public CardLayout clTimePanel;
     public ImagePanel timePanelWinLose;
 
+    public ImagePanel threadDicePanel;
+    public ImagePanel threadClockPanel;
+    public ThreadClock threadClock;
+    public ThreadDice threadDice;
+    
+
     public MainFrame mainFrame;
     public ImagePanel gamePanel;
     public JLabel mineCounterTextLabel;
@@ -57,6 +63,10 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
     public Pair firstMineIndexPair;
 
     public Game(MainFrame mainFrame, int mineNumber, int satirSize, int sutunSize){
+
+        //! initialize the thread objects at the same time with the game object
+        this.threadClock = new ThreadClock(mainFrame);  
+        this.threadDice = new ThreadDice(mainFrame);
 
         //?         restart game yapinca onceki oyunun bilgileri buradan alinacak
         this.restartInformationArr = new int[3];
@@ -198,8 +208,12 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
         ImagePanel threadLeftPanel = new ImagePanel(mainFrame, "dice");
         threadLeftPanel.isThreadPanel = true;
-        ImagePanel threadRightPanel = new ImagePanel(mainFrame, "clock1");
+        ImagePanel threadRightPanel = new ImagePanel(mainFrame, "clock0");
         threadRightPanel.isThreadPanel = true;
+
+        this.threadDicePanel = threadLeftPanel;
+        this.threadClockPanel = threadRightPanel;
+
         timePanelCl1.add(threadLeftPanel); timePanelCl1.add(threadRightPanel);
         cl_game.panelMap.put("threadLeftPanel", threadLeftPanel);
         cl_game.panelMap.put("threadRightPanel",threadRightPanel);
@@ -912,5 +926,42 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         gamePlayGridPanel.repaint();
     }
 
+    public void startThreadClock(){
+
+        threadClock.execute();
+    }
+
+    public void startThreadDice(){
+
+        threadDice.execute();
+    }
+
+    public void stopThreadClock(){
+
+        if(this.threadClock == null){
+
+            //? zaten thread henuz yaratilmamis yada zaten yok edilmis.
+            return;
+        }
+        else{
+
+            this.threadClock.cancel(true);
+            this.threadClock.isOff = true;
+        }
+    }
+
+    public void stopThreadDice(){
+
+        if(this.threadDice == null){
+
+            //? zaten thread henuz yaratilmamis yada zaten yok edilmis.
+            return;
+        }
+        else{
+
+            this.threadDice.cancel(true);
+            this.threadDice.isOff = true;
+        }
+    }
 }
 

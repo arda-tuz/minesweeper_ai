@@ -6,6 +6,7 @@ import java.awt.event.WindowListener;
 import java.time.chrono.MinguoChronology;
 import java.util.HashMap;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 
 public class MainFrame extends JFrame implements WindowListener{
@@ -18,6 +19,8 @@ public class MainFrame extends JFrame implements WindowListener{
     public ImagePanel clPanel; // card layout'a sahip olan ve diger tum panelleri tasiyan panel 
     public HashMap<String, ImagePanel> clPanelMap;
     public CardLayout cl;
+
+    public ImagePanel menu_north_panel;
 
     public Game game = null;
     
@@ -35,16 +38,14 @@ public class MainFrame extends JFrame implements WindowListener{
 
         //     "7" tane sliding panel var 
         ImagePanel cl_menu  = new ImagePanel(this);
-        // ImagePanel cl_game = new ImagePanel(this);
-        // ImagePanel cl_endgame = new ImagePanel(this);
+        ImagePanel cl_custom = new ImagePanel(this);
         ImagePanel cl_win7 = new ImagePanel(this);
         ImagePanel cl_number = new ImagePanel(this);
         ImagePanel cl_mouse = new ImagePanel(this);
         ImagePanel cl_close = new ImagePanel(this);
 
         clPanel.add(cl_menu, "cl_menu");
-        // clPanel.add(cl_game,"cl_game");
-        // clPanel.add(cl_endgame, "cl_endgame");
+         clPanel.add(cl_custom,"cl_custom");
         clPanel.add(cl_win7, "cl_win7");
         clPanel.add(cl_number,"cl_number");
         clPanel.add(cl_mouse, "cl_mouse");
@@ -54,8 +55,7 @@ public class MainFrame extends JFrame implements WindowListener{
         this.clPanelMap = new HashMap<>(7);
         
         clPanelMap.put("cl_menu", cl_menu);
-        // clPanelMap.put("cl_game", cl_game);
-        // clPanelMap.put("cl_endgame", cl_endgame);
+         clPanelMap.put("cl_custom", cl_custom);
         clPanelMap.put("cl_win7", cl_win7);
         clPanelMap.put("cl_number", cl_number);
         clPanelMap.put("cl_mouse", cl_mouse);
@@ -109,36 +109,47 @@ public class MainFrame extends JFrame implements WindowListener{
         ImagePanel cl_menu = clPanelMap.get("cl_menu");
         cl_menu.setLayout(new BorderLayout());
 
-        ImagePanel menu_south_panel = new ImagePanel(mainFrame, "mainMenuBlue");
+        ImagePanel menu_south_panel = new ImagePanel(mainFrame, "whiteBlue");
         menu_south_panel.setLayout(new FlowLayout());
         cl_menu.panelMap.put("menu_south_panel", menu_south_panel);
         cl_menu.add(menu_south_panel, BorderLayout.SOUTH);
 
-        ImagePanel menu_north_panel = new ImagePanel(mainFrame, "mainMenu");
+        ImagePanel menu_north_panel = new ImagePanel(mainFrame);
+
+
+        //!     main menu'de GIF gosterme burada yapiliyor
+        ImageIcon originalIcon = new ImageIcon(this.fixPath("src\\main\\resources\\MainMenuGif.gif"));
+        Image originalImage = originalIcon.getImage();
+        Image resizedImage = originalImage.getScaledInstance(706, 684, Image.SCALE_DEFAULT);
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+        JLabel mainMenuLabel = new JLabel(resizedIcon);
+        menu_north_panel.setLayout(new BorderLayout());
+        menu_north_panel.add(mainMenuLabel, BorderLayout.CENTER);
+        this.menu_north_panel = menu_north_panel;
+
         cl_menu.panelMap.put("menu_north_panel", menu_north_panel);
         cl_menu.add(menu_north_panel, BorderLayout.CENTER);
 
-        MyJbutton win7Button = new MyJbutton(mainFrame, "Win7 MODE");
-        win7Button.setBackground(this.lightBlue);
-        win7Button.setActionCommand("win7");
-        cl_menu.buttonMap.put("win7Button", win7Button);
-        win7Button.setFont(new Font("Serif", Font.ITALIC, 30));
+        ImagePanel windowsButtonPanel = new ImagePanel(mainFrame, "windowsIcon1");
+        ImagePanel customButtonPanel = new ImagePanel(mainFrame, "customIcon1");
 
-        MyJbutton numberButton = new MyJbutton(mainFrame, "Number MODE");
-        numberButton.setBackground(this.lightBlue);
-        numberButton.setActionCommand("number");
-        cl_menu.buttonMap.put("numberButton", numberButton);
-        numberButton.setFont(new Font("Serif", Font.ITALIC, 30));
+        PanelButtonListener windowsButtonPanelListener = new PanelButtonListener(mainFrame, windowsButtonPanel, null, "windows");
+        PanelButtonListener customButtonPanelListener = new PanelButtonListener(mainFrame, null, customButtonPanel, "custom");
 
-        MyJbutton mouseButton = new MyJbutton(mainFrame, "Mouse MODE");
-        mouseButton.setBackground(this.lightBlue);
-        mouseButton.setActionCommand("mouse");
-        cl_menu.buttonMap.put("mouseButton", mouseButton);
-        mouseButton.setFont(new Font("Serif", Font.ITALIC, 30));
+        windowsButtonPanel.addMouseListener(windowsButtonPanelListener); windowsButtonPanel.addMouseMotionListener(windowsButtonPanelListener);
+        customButtonPanel.addMouseListener(customButtonPanelListener); customButtonPanel.addMouseMotionListener(customButtonPanelListener);
 
-        menu_south_panel.add(win7Button);
-        menu_south_panel.add(numberButton);
-        menu_south_panel.add(mouseButton);  
+        Dimension preferredSizeWindows = new Dimension(200, 125); 
+        windowsButtonPanel.setPreferredSize(preferredSizeWindows);
+
+        Dimension preferredSizeCustom = new Dimension(200, 125); 
+        customButtonPanel.setPreferredSize(preferredSizeCustom);
+
+        ImagePanel araPanel = new ImagePanel(mainFrame);
+        Dimension preferredSizeAraPanel = new Dimension(200, 125); 
+        araPanel.setPreferredSize(preferredSizeAraPanel);
+
+        menu_south_panel.add(windowsButtonPanel);  menu_south_panel.add(araPanel); menu_south_panel.add(customButtonPanel);
     }
 ///?====================================================================================================================================    
     private void initialize_cl_win7(MainFrame mainFrame){
