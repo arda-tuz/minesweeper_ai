@@ -129,6 +129,27 @@ public class ImagePanel extends JPanel {
             Image windowsIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\windowsIcon2.jpg")).getImage();
             Image customIcon1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\customIcon1.jpg")).getImage();
             Image customIcon2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\customIcon2.jpg")).getImage();
+            Image peekFlag = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\peekFlag.jpg")).getImage();
+
+            Image green0 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green0.jpg")).getImage();
+            Image green1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green1.jpg")).getImage();
+            Image green2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green2.jpg")).getImage();
+            Image green3 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green3.jpg")).getImage();
+            Image green4 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green4.jpg")).getImage();
+            Image green5 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green5.jpg")).getImage();
+            Image green6 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green6.jpg")).getImage();
+            Image green7 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green7.jpg")).getImage();
+            Image green8 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green8.jpg")).getImage();
+            Image green9 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\green9.jpg")).getImage();
+
+            Image bluePointer = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\bluePointer.jpg")).getImage();
+            Image redPointer = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\redPointer.jpg")).getImage();
+            Image custom_delete1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\custom_delete.jpg")).getImage();
+            Image custom_deleteAll1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\custom_deleteAll.jpg")).getImage();
+
+            Image custom_push2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\custom_push2.jpg")).getImage();
+            Image custom_delete2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\custom_delete2.jpg")).getImage();
+            Image custom_deleteAll2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\custom_deleteAll2.jpg")).getImage();
 
 
 
@@ -211,6 +232,26 @@ public class ImagePanel extends JPanel {
             imageList.add(windowsIcon2);
             imageList.add(customIcon1);
             imageList.add(customIcon2);
+            imageList.add(peekFlag);
+
+            imageList.add(green0);
+            imageList.add(green1);
+            imageList.add(green2);
+            imageList.add(green3);
+            imageList.add(green4);
+            imageList.add(green5);
+            imageList.add(green6);
+            imageList.add(green7);
+            imageList.add(green8);
+            imageList.add(green9);
+            imageList.add(bluePointer);
+            imageList.add(redPointer);
+            imageList.add(custom_delete1);
+            imageList.add(custom_deleteAll1);
+
+            imageList.add(custom_push2);
+            imageList.add(custom_delete2);
+            imageList.add(custom_deleteAll2);
         
         } catch (Exception e) {
 
@@ -219,7 +260,7 @@ public class ImagePanel extends JPanel {
     }
 
     @Override
-        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 70
+        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 88
 
             super.paintComponent(g);
 
@@ -321,7 +362,7 @@ public class ImagePanel extends JPanel {
 
                     g.drawImage(imageList.get(38), 0, 0, getWidth(), getHeight(), this);
                 }
-                else if(this.imageHash.equals("yellowTik")){
+                else if(this.imageHash.equals("custom_push1")){
 
                     g.drawImage(imageList.get(39), 0, 0, getWidth(), getHeight(), this);
                 }
@@ -444,6 +485,78 @@ public class ImagePanel extends JPanel {
                 else if(this.imageHash.equals("customIcon2")){
 
                     g.drawImage(imageList.get(70), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("peekFlag")){
+
+                    g.drawImage(imageList.get(71), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green0")){
+
+                    g.drawImage(imageList.get(72), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green1")){
+
+                    g.drawImage(imageList.get(73), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green2")){
+
+                    g.drawImage(imageList.get(74), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green3")){
+
+                    g.drawImage(imageList.get(75), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green4")){
+
+                    g.drawImage(imageList.get(76), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green5")){
+
+                    g.drawImage(imageList.get(77), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green6")){
+
+                    g.drawImage(imageList.get(78), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green7")){
+
+                    g.drawImage(imageList.get(79), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green8")){
+
+                    g.drawImage(imageList.get(80), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("green9")){
+
+                    g.drawImage(imageList.get(81), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("bluePointer")){
+
+                    g.drawImage(imageList.get(82), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("redPointer")){
+
+                    g.drawImage(imageList.get(83), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("custom_delete1")){
+
+                    g.drawImage(imageList.get(84), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("custom_deleteAll1")){
+
+                    g.drawImage(imageList.get(85), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("custom_push2")){
+
+                    g.drawImage(imageList.get(86), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("custom_delete2")){
+
+                    g.drawImage(imageList.get(87), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("custom_deleteAll2")){
+
+                    g.drawImage(imageList.get(88), 0, 0, getWidth(), getHeight(), this);
                 }
                 else{
                 }

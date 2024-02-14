@@ -33,7 +33,8 @@ public class ThreadClock extends SwingWorker<Void, String>{
 
                 publish(frames[i]);
                 i = (i + 1) % frames.length;
-                Thread.sleep(190);          //todo      bu hiz AI' in hizina gore ayarlanacak
+                // Thread.sleep(190);          //TODO  bu hiz AI' in hizina gore ayarlanacak
+                Thread.sleep(3);
 
                 if (restart) {
 

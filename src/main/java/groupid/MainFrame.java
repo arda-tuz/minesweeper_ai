@@ -3,13 +3,14 @@ package groupid;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.time.chrono.MinguoChronology;
 import java.util.HashMap;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 
 public class MainFrame extends JFrame implements WindowListener{
+
+    JLabel leftLabel; JLabel middleLabel; JLabel rightLabel;
+    String leftLabelStr; String middleLabelStr; String rightLabelStr; int strPointer; //? {0 = left, 1 = middle, 2 = right}
 
     public Color lightBlue = new Color(100, 200, 255);
     public Color greyBlue = new Color(70, 130, 180);
@@ -100,6 +101,8 @@ public class MainFrame extends JFrame implements WindowListener{
        initialize_cl_menu(mainFrame);
 
        initialize_cl_win7(mainFrame);
+
+       initialize_cl_custom(mainFrame);
 
        initialize_cl_close(mainFrame);
     }
@@ -195,6 +198,169 @@ public class MainFrame extends JFrame implements WindowListener{
         upPanel.add(upButton); middlePanel.add(middleButton); downPanel.add(downButton);
     }
 ///?====================================================================================================================================
+    private void initialize_cl_custom(MainFrame mainFrame){
+
+        ImagePanel cl_custom = clPanelMap.get("cl_custom");
+        cl_custom.setLayout(new BorderLayout());  
+        
+        ImagePanel northPanel = new ImagePanel(mainFrame);
+        northPanel.setLayout(new GridLayout(2,3));
+
+        ImagePanel centerPanel = new ImagePanel(mainFrame); 
+        centerPanel.setLayout(new GridLayout(5,3));
+
+        cl_custom.add(northPanel, BorderLayout.NORTH);
+        cl_custom.add(centerPanel, BorderLayout.CENTER);
+
+        ImagePanel custom_left = new ImagePanel(mainFrame, "yellowPointer");//? Custom mode default left'e yazacak sekilde baslar 
+        ImagePanel custom_middle = new ImagePanel(mainFrame);
+        ImagePanel custom_right = new ImagePanel(mainFrame);
+
+        ImagePanel leftLabelPanel = new ImagePanel(mainFrame);
+        this.leftLabelStr = "";
+        this.leftLabel = new JLabel(leftLabelStr);
+        leftLabel.setFont(new Font("Courier New", Font.BOLD, 30));
+        leftLabelPanel.setLayout(new BorderLayout());
+        leftLabelPanel.add(leftLabel, BorderLayout.CENTER);
+
+        ImagePanel middleLabelPanel = new ImagePanel(mainFrame);
+        this.middleLabelStr = "";
+        this.middleLabel = new JLabel(middleLabelStr);
+        middleLabel.setFont(new Font("Courier New", Font.BOLD, 30));
+        middleLabelPanel.setLayout(new BorderLayout());
+        middleLabelPanel.add(middleLabel, BorderLayout.CENTER);
+
+        ImagePanel rightLabelPanel = new ImagePanel(mainFrame);
+        this.rightLabelStr = "";
+        this.rightLabel = new JLabel(rightLabelStr);
+        rightLabel.setFont(new Font("Courier New", Font.BOLD, 30));
+        rightLabelPanel.setLayout(new BorderLayout());
+        rightLabelPanel.add(rightLabel, BorderLayout.CENTER);
+
+        northPanel.add(leftLabelPanel); northPanel.add(middleLabelPanel); northPanel.add(rightLabelPanel);
+        northPanel.add(custom_left); northPanel.add(custom_middle); northPanel.add(custom_right);
+
+        Dimension preferredSizeNorthPanel = new Dimension(northPanel.getPreferredSize().width, 200); 
+        northPanel.setPreferredSize(preferredSizeNorthPanel);
+
+
+        this.strPointer = 0; //? Baslangicta left str'a bakacak pointer.
+
+
+        ImagePanel custom_0 = new ImagePanel(mainFrame, "yellow0");
+        ImagePanel custom_1 = new ImagePanel(mainFrame, "yellow1");
+        ImagePanel custom_2 = new ImagePanel(mainFrame, "yellow2");
+        ImagePanel custom_3 = new ImagePanel(mainFrame, "yellow3");
+        ImagePanel custom_4 = new ImagePanel(mainFrame, "yellow4");
+        ImagePanel custom_5 = new ImagePanel(mainFrame, "yellow5");
+        ImagePanel custom_6 = new ImagePanel(mainFrame, "yellow6");
+        ImagePanel custom_7 = new ImagePanel(mainFrame, "yellow7");
+        ImagePanel custom_8 = new ImagePanel(mainFrame, "yellow8");
+        ImagePanel custom_9 = new ImagePanel(mainFrame, "yellow9");
+        ImagePanel custom_delete = new ImagePanel(mainFrame, "custom_delete1");
+        ImagePanel custom_deleteAll = new ImagePanel(mainFrame, "custom_deleteAll1");
+        ImagePanel bosPanelLeft = new ImagePanel(mainFrame);
+
+        JLabel bosPanelLabel1 = new JLabel(" Row|Column|Mine");
+        bosPanelLabel1.setFont(new Font("Courier New", Font.BOLD, 22));
+        bosPanelLeft.setLayout(new BorderLayout());
+        bosPanelLeft.add(bosPanelLabel1, BorderLayout.CENTER);
+
+        ImagePanel custom_push = new ImagePanel(mainFrame, "custom_push1");
+        ImagePanel bosPanelRight = new ImagePanel(mainFrame);
+        bosPanelRight.setLayout(new BorderLayout());
+        JLabel bosPanelLabel2= new JLabel("Row|Column|Mine");
+        bosPanelLabel2.setFont(new Font("Courier New", Font.BOLD, 22));
+        bosPanelRight.add(bosPanelLabel2, BorderLayout.CENTER);
+
+        centerPanel.add(custom_0);
+        centerPanel.add(custom_1);
+        centerPanel.add(custom_2);
+        centerPanel.add(custom_3);
+        centerPanel.add(custom_4);
+        centerPanel.add(custom_5);
+        centerPanel.add(custom_6);
+        centerPanel.add(custom_7);
+        centerPanel.add(custom_8);
+        centerPanel.add(custom_9);
+        centerPanel.add(custom_delete);
+        centerPanel.add(custom_deleteAll);
+        centerPanel.add(bosPanelLeft);
+        centerPanel.add(custom_push);
+        centerPanel.add(bosPanelRight); 
+
+        //? PanelButtonlistener'larin atandigi yer burasi :
+
+        PanelButtonListener custom_leftListener = new PanelButtonListener(mainFrame, custom_left, "left");
+        custom_left.addMouseListener(custom_leftListener); custom_left.addMouseMotionListener(custom_leftListener);
+
+        PanelButtonListener custom_rightListener = new PanelButtonListener(mainFrame, custom_right, "right");
+        custom_right.addMouseListener(custom_rightListener); custom_right.addMouseMotionListener(custom_rightListener);
+
+        PanelButtonListener custom_middleListener = new PanelButtonListener(mainFrame, custom_middle, "middle");
+        custom_middle.addMouseListener(custom_middleListener); custom_middle.addMouseMotionListener(custom_middleListener);
+
+        PanelButtonListener custom_0Listener = new PanelButtonListener(mainFrame, custom_0, "0");
+        custom_0.addMouseListener(custom_0Listener); custom_0.addMouseMotionListener(custom_0Listener);
+
+        PanelButtonListener custom_1Listener = new PanelButtonListener(mainFrame, custom_1, "1");
+        custom_1.addMouseListener(custom_1Listener); custom_1.addMouseMotionListener(custom_1Listener);
+
+        PanelButtonListener custom_2Listener = new PanelButtonListener(mainFrame, custom_2, "2");
+        custom_2.addMouseListener(custom_2Listener); custom_2.addMouseMotionListener(custom_2Listener);
+
+        PanelButtonListener custom_3Listener = new PanelButtonListener(mainFrame, custom_3, "3");
+        custom_3.addMouseListener(custom_3Listener); custom_3.addMouseMotionListener(custom_3Listener);
+
+        PanelButtonListener custom_4Listener = new PanelButtonListener(mainFrame, custom_4, "4");
+        custom_4.addMouseListener(custom_4Listener); custom_4.addMouseMotionListener(custom_4Listener);
+
+        PanelButtonListener custom_5Listener = new PanelButtonListener(mainFrame, custom_5, "5");
+        custom_5.addMouseListener(custom_5Listener); custom_5.addMouseMotionListener(custom_5Listener);
+
+        PanelButtonListener custom_6Listener = new PanelButtonListener(mainFrame, custom_6, "6");
+        custom_6.addMouseListener(custom_6Listener); custom_6.addMouseMotionListener(custom_6Listener);
+
+        PanelButtonListener custom_7Listener = new PanelButtonListener(mainFrame, custom_7, "7");
+        custom_7.addMouseListener(custom_7Listener); custom_7.addMouseMotionListener(custom_7Listener);
+
+        PanelButtonListener custom_8Listener = new PanelButtonListener(mainFrame, custom_8, "8");
+        custom_8.addMouseListener(custom_8Listener); custom_8.addMouseMotionListener(custom_8Listener);
+
+        PanelButtonListener custom_9Listener = new PanelButtonListener(mainFrame, custom_9, "9");
+        custom_9.addMouseListener(custom_9Listener); custom_9.addMouseMotionListener(custom_9Listener);
+
+        PanelButtonListener custom_deleteListener = new PanelButtonListener(mainFrame, custom_delete, "delete");
+        custom_delete.addMouseListener(custom_deleteListener); custom_delete.addMouseMotionListener(custom_deleteListener);
+
+        PanelButtonListener custom_deleteAllListener = new PanelButtonListener(mainFrame, custom_deleteAll, "deleteAll");
+        custom_deleteAll.addMouseListener(custom_deleteAllListener); custom_deleteAll.addMouseMotionListener(custom_deleteAllListener);
+
+        PanelButtonListener custom_pushListener = new PanelButtonListener(mainFrame, custom_push, "push");
+        custom_push.addMouseListener(custom_pushListener); custom_push.addMouseMotionListener(custom_pushListener);
+
+        //?         middle/ left/ right objelerinin referansi hepsinde bulunsun ulasmam gerekti
+        custom_leftListener.custom_middle = custom_middle;
+        custom_leftListener.custom_right = custom_right;
+
+        custom_middleListener.custom_left = custom_left;
+        custom_middleListener.custom_right = custom_right;
+
+        custom_rightListener.custom_left = custom_left;
+        custom_rightListener.custom_middle = custom_middle;
+    }
+///?====================================================================================================================================
+    public void updateTextLabels(){
+
+        this.leftLabel.setText(this.leftLabelStr);
+        this.middleLabel.setText(this.middleLabelStr);
+        this.rightLabel.setText(this.rightLabelStr);
+
+        this.leftLabel.repaint();
+        this.middleLabel.repaint();
+        this.rightLabel.repaint();
+    }
+
     private void initialize_cl_close(MainFrame mainFrame){
 
         ImagePanel cl_close = clPanelMap.get("cl_close");

@@ -12,6 +12,9 @@ import java.util.*;
 
 public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface olarak duracak
 
+    GameInterface gameInterface;
+    Ai ai;
+
     public CardLayout clPeek;
     public ImagePanel startPanelRightClContainer;
     public ImagePanel timePanel;
@@ -598,6 +601,10 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         
                                 tileBoard[i][j].imageHash = "peek";
                             }
+                            if(userBoard[i][j] == 'f' && mineBoard[i][j] == 'm'){
+        
+                                tileBoard[i][j].imageHash = "peekFlag";
+                            }
                         }
                     }
                 }
@@ -646,8 +653,9 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
             this.ffIsVisitedArr[x][y] = true;
 
-
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+            //!----------------------------------------
+            //!     BASE CASE 1
+            //!----------------------------------------
             this.openedCount ++;
 
             checkGameWon();
@@ -668,7 +676,9 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
             this.ffIsVisitedArr[x][y] = true;
 
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+            //!----------------------------------------
+            //!     BASE CASE 1
+            //!----------------------------------------
             this.openedCount ++;
 
             checkGameWon();
@@ -806,6 +816,8 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
             this.gamePlayGridPanel.repaint();
             this.isGameOver = true;
             this.initializeEndGameSequence("lose");
+
+            destroyAll3Threads();
         }  
     }
 
@@ -831,17 +843,14 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
             this.gamePlayGridPanel.repaint();
             this.isGameWon = true;
             this.initializeEndGameSequence("win");
+
+            destroyAll3Threads();
         }
     }
 
     public void flagTile(int x, int y){
 
         if(this.isGameOver == true || this.isGameWon == true){
-
-            return;
-        }
-
-        if(this.tileBoard[x][y].imageHash.equals("peek")){ //? peek modu acik iken siyah mine'larin ustune flag konulamaz
 
             return;
         }
@@ -857,7 +866,23 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         }
 
         userBoard[x][y] = 'f';
-        this.tileBoard[x][y].imageHash = "f";
+
+        if(this.isPeekModeOn){
+
+            if(mineBoard[x][y] == 'm'){
+
+                this.tileBoard[x][y].imageHash = "peekFlag";
+            }
+            else{
+
+                this.tileBoard[x][y].imageHash = "f"; 
+            }
+        }
+        else{
+
+            this.tileBoard[x][y].imageHash = "f";
+        }
+    
         flagCount ++;
         updateMineCounter();
 
@@ -877,7 +902,23 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
         }
 
         userBoard[x][y] = 'c';
-        this.tileBoard[x][y].imageHash = "c";
+
+        if(this.isPeekModeOn){
+
+            if(mineBoard[x][y] == 'm'){
+
+                this.tileBoard[x][y].imageHash = "peek";
+            }
+            else{
+
+                this.tileBoard[x][y].imageHash = "c";
+            }
+        }
+        else{
+
+            this.tileBoard[x][y].imageHash = "c";
+        }
+
         flagCount --;
         updateMineCounter();
 
@@ -902,6 +943,10 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
 
                         tileBoard[i][j].imageHash = "c";
                     }
+                    if(tileBoard[i][j].imageHash.equals("peekFlag")){
+
+                        tileBoard[i][j].imageHash = "f";
+                    }
                 }
             }
 
@@ -916,6 +961,10 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
                     if(userBoard[i][j] == 'c' && mineBoard[i][j] == 'm'){
 
                         tileBoard[i][j].imageHash = "peek";
+                    }
+                    if(userBoard[i][j] == 'f' && mineBoard[i][j] == 'm'){
+
+                        tileBoard[i][j].imageHash = "peekFlag";
                     }
                 }
             }
@@ -962,6 +1011,48 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
             this.threadDice.cancel(true);
             this.threadDice.isOff = true;
         }
+    }
+
+    public void stopThreadAi(){
+
+        if(this.ai == null){
+
+            //? zaten thread henuz yaratilmamis yada zaten yok edilmis.
+            return;
+        }
+        else{
+
+            this.ai.cancel(true);
+            this.ai.isOff = true;
+        }
+    }
+
+    public void destroyAll3Threads(){
+
+        this.stopThreadClock();
+        this.stopThreadDice();
+        this.stopThreadAi();
+    }
+
+    public void initializeEverythingAboutAi(){
+
+        this.gameInterface = new GameInterface(this);
+        this.ai = new Ai(gameInterface);
+    }
+
+    public void printBoard(char[][] board){
+
+        for(int i = 0; i < satirSize; i++){
+
+            for(int j = 0; j < sutunSize; j ++){
+
+                System.out.print(board[i][j] + "  ");
+            }
+
+            System.out.println();
+        }
+
+        System.out.println();
     }
 }
 
