@@ -1,7 +1,5 @@
 package groupid;
 
-import java.util.ArrayList;
-
 public class GameInterface {
     
     private Game game;

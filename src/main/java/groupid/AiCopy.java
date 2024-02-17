@@ -3,12 +3,11 @@ import java.util.*;
 import javax.swing.SwingWorker;
 
 
-public class Ai extends SwingWorker<Void, String>{
+public class AiCopy extends SwingWorker<Void, String>{
 
     //!===============================================================
     //!  KAC DENEMEDE EXPERT'DE BASARILI OLDU AI TESTLER:
     //!  6, 2, 10, 5, 4, 2, 8, 4, 2, 1, 2, 6, 4, 9, 7 
-    //!  expertte ortalamada 7 elde 1 basarili oluyor genelde  ...
     //!===============================================================
 
     //?  userBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8, f, c] // f = flag // c = closed
@@ -20,7 +19,9 @@ public class Ai extends SwingWorker<Void, String>{
     public boolean isEndGame = false;
     public ArrayList<boolean[]> backtrackingAlgoSolutions;
 
-    public Ai(GameInterface gameInterface){
+    public AiCopy(GameInterface gameInterface){
+
+        System.out.println("AI 2 IS RUNNING");
 
         this.gameInterface = gameInterface;
         this.gameInterface.startThreadClock();
@@ -64,7 +65,7 @@ public class Ai extends SwingWorker<Void, String>{
         aiOpen();
     }
 
-    public void aiFlag(){   
+    public void aiFlag(){   // attempFlagMine()
 
         //?  Note that we only flag a mine if we are certain that it is a mine
         //? that's why aiFlag() method only consists of the brainFlagAlgo() method
@@ -72,7 +73,7 @@ public class Ai extends SwingWorker<Void, String>{
         arrowFlagAlgo();
     }
 
-    public void aiOpen(){  
+    public void aiOpen(){   // attemptMove()
 
         //? BrainOpenAlgo() kesin olanlari acan algo.
         boolean isArrowOpenAlgoWorked = arrowOpenAlgo();
@@ -315,7 +316,7 @@ public class Ai extends SwingWorker<Void, String>{
         }
     }
 
-    public boolean arrowOpenAlgo() {   //?  kesinlikle acilmasi gereken tile'lari acan ARROW algo
+    public boolean arrowOpenAlgo() {   //?  kesinlikle acilmasi gereken tile'lari acan BRAIN algo
 
         //? if the num of flags around a cell == number on the cell open every unoppened cell around that cell (chording)
     
@@ -359,10 +360,10 @@ public class Ai extends SwingWorker<Void, String>{
         return isThisAlgoWorked;
     }
 //?==========================================================================================================================================
-    boolean[][] enumEmptyBoard = null;
-    boolean[][] enumMineBoard = null;
+    boolean[][] knownEmpty = null;
+    boolean[][] knownMine = null;
 
-    public void brainDiceAlgo(){
+    public void brainDiceAlgo(){ //! tankSolver()
 
         gameInterface.ThreadClockRestart();
         gameInterface.ThreadDiceSetMode("brain");
@@ -429,16 +430,16 @@ public class Ai extends SwingWorker<Void, String>{
         }
 
         boolean basariliMi = false;
-        int globalBestProbability = 0; 
-        int globalBestProbTile = Integer.MIN_VALUE;
-        int globalBestProb_recursiveTiles_i = Integer.MIN_VALUE;
+        double prob_best = 0; 
+        int prob_besttile = -1;
+        int prob_best_s = -1;
 
         for(int recursiveTiles_i = 0; recursiveTiles_i < seperateRecursiveTilesList.size(); recursiveTiles_i++){
 
             this.backtrackingAlgoSolutions = new ArrayList<boolean[]>(); //? yeni recursiveList icin solution list'i sifirla
 
-            this.enumEmptyBoard = new boolean[gameInterface.getSatirSize()][gameInterface.getSutunSize()];
-            this.enumMineBoard = new boolean[gameInterface.getSatirSize()][gameInterface.getSutunSize()];
+            this.knownEmpty = new boolean[gameInterface.getSatirSize()][gameInterface.getSutunSize()];
+            this.knownMine = new boolean[gameInterface.getSatirSize()][gameInterface.getSutunSize()];
 
             for(int i = 0; i < userBoardSnapShot.length; i ++){
 
@@ -446,25 +447,25 @@ public class Ai extends SwingWorker<Void, String>{
 
                     if(userBoardSnapShot[i][j] == 'f'){
 
-                        enumMineBoard[i][j] = true;
+                        knownMine[i][j] = true;
                     }
                     else{
                         
-                        enumMineBoard[i][j] = false;
+                        knownMine[i][j] = false;
                     }
 
                     if(isTileNumberUserBoardSnapshot(userBoardSnapShot, i, j)){
 
-                        enumEmptyBoard[i][j] = true;
+                        knownEmpty[i][j] = true;
                     }
                     else{
 
-                        enumEmptyBoard[i][j] = false;
+                        knownEmpty[i][j] = false;
                     }
                 }
             }
 
-            backtrackingAlgoEnumarate(seperateRecursiveTilesList.get(recursiveTiles_i), 0, userBoardSnapShot);
+            backtrackingAlgoRecurse(seperateRecursiveTilesList.get(recursiveTiles_i), 0, userBoardSnapShot);
 
             if(this.backtrackingAlgoSolutions.size() == 0){
 
@@ -473,75 +474,73 @@ public class Ai extends SwingWorker<Void, String>{
 
             for(int i = 0; i < seperateRecursiveTilesList.get(recursiveTiles_i).size(); i++){
 
-                boolean isAllEnumarationsMine = true;
-                boolean isAllEnumarationsEmpty = true;
-
-                for(boolean[] solution : backtrackingAlgoSolutions){
-
-                    if(!solution[i]){
-
-                        isAllEnumarationsMine = false;
-                    }
-
-                    if(solution[i]){
-
-                        isAllEnumarationsEmpty = false;
-                    }
-                }
-
-                Pair pair = seperateRecursiveTilesList.get(recursiveTiles_i).get(i);
-                int sat = pair.satir;
-                int sut = pair.sutun;
-
-                if(isAllEnumarationsMine){
-                    //! eger all enum. mine ise onu direk flagla ve bunu snapshot'a dahil et
-
-                    userBoardSnapShot[sat][sut] = 'f';
-                    gameInterface.flagTile(sat, sut);
-                }
-                if(isAllEnumarationsEmpty){
-                    //! eger all enum. open ise onu open'la ama snapshot'a dahil etme !!!
-
-                    basariliMi = true;
-                    gameInterface.openTile(sat, sut);
-                }
-            }
-
-            if(basariliMi){ //! eger 1 tane bile open tile yaptiysak bu seperatedListin probabilitysini local optimal hesabina dahil etme 
-
-                continue;
-            }
-
-            int localBestProbability = Integer.MIN_VALUE; int localBestProbabilityIndex = 0;
-
-            for(int i = 0; i < seperateRecursiveTilesList.get(recursiveTiles_i).size(); i++){
-
-                int emptyCount = 0;
+                boolean allMine = true;
+                boolean allEmpty = true;
 
                 for(boolean[] sln : backtrackingAlgoSolutions){
 
                     if(!sln[i]){
 
-                        emptyCount ++;
+                        allMine = false;
+                    }
+
+                    if(sln[i]){
+
+                        allEmpty = false;
                     }
                 }
 
-                if(emptyCount > localBestProbability){
+                Pair q = seperateRecursiveTilesList.get(recursiveTiles_i).get(i);
+                int qi = q.satir;
+                int qj = q.sutun;
 
-                    localBestProbability = emptyCount;
-                    localBestProbabilityIndex = i;
+                // Muahaha
+                if(allMine){
+
+                    userBoardSnapShot[qi][qj] = 'f';
+                    gameInterface.flagTile(qi, qj);
+                }
+                if(allEmpty){
+
+                    basariliMi = true;
+                    gameInterface.openTile(qi, qj);
                 }
             }
 
-            //! local probabilityler o an tum herhangi bir open islemi yapamamis seperateTileList'ler arasindan hesaplaniyor
-            //! ... Sonra globalProbability tum loalllerin max'i olarak hesaplaniyor 
+            if(basariliMi){
 
-            if(localBestProbability > globalBestProbability){
-        
-                globalBestProbability = localBestProbability;
-                globalBestProbTile = localBestProbabilityIndex;
-                globalBestProb_recursiveTiles_i = recursiveTiles_i;
+                continue;
             }
+
+            int maxEmpty = -10000; int iEmpty = -1;
+
+            for(int i = 0; i < seperateRecursiveTilesList.get(recursiveTiles_i).size(); i++){
+
+                int nEmpty = 0;
+
+                for(boolean[] sln : backtrackingAlgoSolutions){
+
+                    if(!sln[i]){
+
+                        nEmpty ++;
+                    }
+                }
+
+                if(nEmpty > maxEmpty){
+
+                    maxEmpty = nEmpty;
+                    iEmpty = i;
+                }
+            }
+
+            double probability = (double)maxEmpty / (double)backtrackingAlgoSolutions.size();
+
+            if(probability > prob_best){
+        
+                prob_best = probability;
+                prob_besttile = iEmpty;
+                prob_best_s = recursiveTiles_i;
+              }
         }
         
         if(basariliMi){
@@ -549,73 +548,70 @@ public class Ai extends SwingWorker<Void, String>{
             return; //? no guessing
         }
 
-        gameInterface.ThreadDiceSetMode("dice");
-        System.out.println("$$$__DICE");
+        gameInterface.ThreadDiceSetMode("arrow");
+        System.out.println("$$$------------- DICE");
 
-        Pair pair = seperateRecursiveTilesList.get(globalBestProb_recursiveTiles_i).get(globalBestProbTile);
-        gameInterface.openTile(pair.satir, pair.sutun);
+        Pair q = seperateRecursiveTilesList.get(prob_best_s).get(prob_besttile);
+        int qi = q.satir;
+        int qj = q.sutun;
+        gameInterface.openTile(qi, qj);
     }
 //?==========================================================================================================================================
-    public void backtrackingAlgoEnumarate(ArrayList<Pair> recursiveTiles, int currIndex, char[][] userBoardSnapShot){  
+    public void backtrackingAlgoRecurse(ArrayList<Pair> recursiveTiles, int currIndex, char[][] userBoardSnapShot){    //! tankRecurse()
 
-        int allFlagsCount = 0;
+        int flagCount = 0;
 
         for(int i = 0; i < userBoardSnapShot.length; i ++){
 
             for(int j = 0; j < userBoardSnapShot[0].length; j++){
 
-                if(enumMineBoard[i][j]){
+                if(knownMine[i][j]){
 
-                    allFlagsCount++;
+                    flagCount++;
                 }
 
                 if(! isTileNumberUserBoardSnapshot(userBoardSnapShot, i, j)){
 
-                    //? Zaten hakkinda bir bilgim yok neyin infeasible'ligini kontrol edicem direk continue at gitsin
+                    //? Zaten hakkinda bir bilgim yok neyin infeasible'ligini kontrol edicem
                     continue;
                 }
 
-                int adjacentTileCount = 0;
+                int surround = 0;
                 if((i==0 && j==0) || (i== gameInterface.getSatirSize()-1 && j==gameInterface.getSutunSize()-1)){
 
-                    adjacentTileCount = 3;
+                    surround = 3;
                 }
                 else if(i==0 || j==0 || i==gameInterface.getSatirSize()-1 || j==gameInterface.getSutunSize()-1){
 
-                    adjacentTileCount = 5;
+                    surround = 5;
                 }
                 else{
 
-                    adjacentTileCount = 8;
+                    surround = 8;
                 }
 
-                int adjacentFlagCount = countTruesAround(enumMineBoard, i,j);
-                int adjacentEmptyCount = countTruesAround(enumEmptyBoard, i,j);
+                int numFlags = countTruesAround(knownMine, i,j);
+                int numFree = countTruesAround(knownEmpty, i,j);
 
                 int num = Character.getNumericValue(userBoardSnapShot[i][j]);
-                
-                if(adjacentFlagCount > num){    //! INFEASIBLE 1 } MAYIN SAYISI UZERINDE YAZANLA UYUSMUYOR
+                // Scenario 1: too many mines
+                if(numFlags > num) return;
 
-                    return;
-                }
-
-                if(adjacentTileCount - adjacentEmptyCount < num){ //! INFEASIBLE 2 } EMPTY TILE SAYISI UZERINDE YAZANLA UYUSMUYOR
-
-                    return;
-                }
+                // Scenario 2: too many empty
+                if(surround - numFree < num) return;
             }
         }
 
-        if(allFlagsCount > gameInterface.getMineNumber()){ //! oyundaki toplam mayin sayisindan daha fazla flag kullanmissin infeasible
+        if(flagCount > gameInterface.getMineNumber()){  // we have to many flags
 
             return;
         }
 
-        if(currIndex == recursiveTiles.size()){ //! ENUMARATION SONUNA GELDIK 
+        if(currIndex == recursiveTiles.size()){
 
-            if(isEndGame && allFlagsCount < gameInterface.getMineNumber()){
+            if(isEndGame && flagCount < gameInterface.getMineNumber()){
 
-                return; //? OYUN SONUNDA FLAG SAYIM TAM OLARAK GERCEK MINE SAYISINI TUTMALI YOKSA INFEASIBLE
+                return;
             }
 
             boolean[] solution = new boolean[recursiveTiles.size()];
@@ -624,45 +620,47 @@ public class Ai extends SwingWorker<Void, String>{
 
                 Pair pair = recursiveTiles.get(i);
 
-                solution[i] = enumMineBoard[pair.satir][pair.sutun];
+                solution[i] = knownMine[pair.satir][pair.sutun];
             }
 
             backtrackingAlgoSolutions.add(solution);
             return;
         }
 
-        Pair pair = recursiveTiles.get(currIndex);
-        int x = pair.satir;
-        int y = pair.sutun;
+        Pair q = recursiveTiles.get(currIndex);
+        int qi = q.satir;
+        int qj = q.sutun;
 
-        //! ENUMARATION STEP BURDA BIR MAYIN'LI BIRDE EMPTY OLARAK RECURSE ET 
-        enumMineBoard[x][y] = true;
-        backtrackingAlgoEnumarate(recursiveTiles, currIndex+1, userBoardSnapShot);
-        enumMineBoard[x][y] = false;
+        // Recurse two positions: mine and no mine
+        knownMine[qi][qj] = true;
+        backtrackingAlgoRecurse(recursiveTiles, currIndex+1, userBoardSnapShot);
+        knownMine[qi][qj] = false;
 
-        enumEmptyBoard[x][y] = true;
-        backtrackingAlgoEnumarate(recursiveTiles, currIndex+1, userBoardSnapShot);
-        enumEmptyBoard[x][y] = false;
+        knownEmpty[qi][qj] = true;
+        backtrackingAlgoRecurse(recursiveTiles, currIndex+1, userBoardSnapShot);
+        knownEmpty[qi][qj] = false;
+
     }
 //?==========================================================================================================================================
     public ArrayList<ArrayList<Pair>> seperateBorderTiles(ArrayList<Pair> recursiveTiles, char[][] userBoardSnapShot){ //! tankSegregate()
 
-        ArrayList<ArrayList<Pair>> allSeperatedLists = new ArrayList<ArrayList<Pair>>();
-        ArrayList<Pair> listsThatAreProcessed = new ArrayList<Pair>();
+        ArrayList<ArrayList<Pair>> allRegions = new ArrayList<ArrayList<Pair>>();
+        ArrayList<Pair> covered = new ArrayList<Pair>();
 
         while(true){
 
             LinkedList<Pair> queue = new LinkedList<Pair>();
-            ArrayList<Pair> finishedPairList = new ArrayList<Pair>();
+            ArrayList<Pair> finishedRegion = new ArrayList<Pair>();
 
-            for(Pair firstT : recursiveTiles){  
+            // Find a suitable starting point
+            for(Pair firstT : recursiveTiles){
 
-                if(!listsThatAreProcessed.contains(firstT)){
+                if(!covered.contains(firstT)){
 
                     queue.add(firstT);
                     break;
                 }
-            }       //!  baslangic yeri bulmaya calis buldugun anda break et. Algo ondan baslicak 
+            }
 
             if(queue.isEmpty()){
                 
@@ -671,33 +669,34 @@ public class Ai extends SwingWorker<Void, String>{
 
             while(!queue.isEmpty()){
 
-                Pair currentTile = queue.poll();
-                int currentTile_i = currentTile.satir;
-                int currentTile_j = currentTile.sutun;
+                Pair curTile = queue.poll();
+                int ci = curTile.satir;
+                int cj = curTile.sutun;
 
-                finishedPairList.add(currentTile);
-                listsThatAreProcessed.add(currentTile);
+                finishedRegion.add(curTile);
+                covered.add(curTile);
 
+                // Find all connecting tiles
                 for(Pair tile : recursiveTiles){
 
-                    int tile_i = tile.satir;
-                    int tile_j = tile.sutun;
+                    int ti = tile.satir;
+                    int tj = tile.sutun;
 
-                    boolean areWeDone = false;
+                    boolean isConnected = false;
 
-                    if(finishedPairList.contains(tile)){
+                    if(finishedRegion.contains(tile)){
 
                         continue;
                     }
                     
-                    if(Math.abs(currentTile_i-tile_i) > 2 || Math.abs(currentTile_j-tile_j) > 2){
+                    if(Math.abs(ci-ti)>2 || Math.abs(cj-tj) > 2){
 
-                        areWeDone = false;
+                        isConnected = false;
                     }
 
                     else{
-                        
-                        breakLabel:
+                        // Perform a search on all the tiles
+                        tilesearch:
 
                         for(int i=0; i<gameInterface.getSatirSize(); i++){
 
@@ -705,18 +704,18 @@ public class Ai extends SwingWorker<Void, String>{
 
                                 if(userBoardSnapShot[i][j] != '0' && isTileNumberUserBoardSnapshot(userBoardSnapShot, i, j)){
 
-                                    if(Math.abs(currentTile_i-i) <= 1 && Math.abs(currentTile_j-j) <= 1 &&
-                                        Math.abs(tile_i-i) <= 1 && Math.abs(tile_j-j) <= 1){
+                                    if(Math.abs(ci-i) <= 1 && Math.abs(cj-j) <= 1 &&
+                                        Math.abs(ti-i) <= 1 && Math.abs(tj-j) <= 1){
 
-                                        areWeDone = true;
-                                        break breakLabel;
+                                        isConnected = true;
+                                        break tilesearch;
                                     }
                                 }
                             }
                         }
                     }
                     
-                    if(!areWeDone){
+                    if(!isConnected){
 
                         continue;
                     }
@@ -728,13 +727,67 @@ public class Ai extends SwingWorker<Void, String>{
                 }
             }
 
-            allSeperatedLists.add(finishedPairList);
+            allRegions.add(finishedRegion);
         }
 
-        return allSeperatedLists;
+        return allRegions;
     }
 //?==========================================================================================================================================
-    //!     Auxilary method to count the trues in the enumarationMineBoard and enumrationEmptyBoard
+
+    public int dummyMineBoardCountMine(char[][] dummyMineBoard, int x, int y){
+
+        int count = 0;
+
+        char[][] userBoard = dummyMineBoard;
+        int satirSize = gameInterface.getSatirSize();
+        int sutunSize = gameInterface.getSutunSize();
+
+        boolean upEdge = false, downEdge = false, leftEdge = false, rightEdge = false;
+
+        if(x == 0) upEdge = true;
+        if(y == 0) leftEdge = true;
+        if(x == satirSize-1) downEdge = true;
+        if(y == sutunSize-1) rightEdge = true;
+
+        if(!upEdge && userBoard[x-1][y] == 'm') count++;
+        if(!leftEdge && userBoard[x][y-1] == 'm') count++;
+        if(!downEdge && userBoard[x+1][y] == 'm') count++;
+        if(!rightEdge && userBoard[x][y+1] == 'm') count++;
+        if(!upEdge && !leftEdge && userBoard[x-1][y-1] == 'm') count++;
+        if(!upEdge && !rightEdge && userBoard[x-1][y+1] == 'm') count++;
+        if(!downEdge && !leftEdge && userBoard[x+1][y-1] == 'm') count++;
+        if(!downEdge && !rightEdge && userBoard[x+1][y+1]  == 'm') count++;
+
+        return count;
+    }
+
+    public int dummyMineBoardCountEmpty(char[][] dummyMineBoard, int x, int y){
+
+        int count = 0;
+
+        char[][] userBoard = dummyMineBoard;
+        int satirSize = gameInterface.getSatirSize();
+        int sutunSize = gameInterface.getSutunSize();
+
+        boolean upEdge = false, downEdge = false, leftEdge = false, rightEdge = false;
+
+        if(x == 0) upEdge = true;
+        if(y == 0) leftEdge = true;
+        if(x == satirSize-1) downEdge = true;
+        if(y == sutunSize-1) rightEdge = true;
+
+        if(!upEdge && userBoard[x-1][y] == '-') count++;
+        if(!leftEdge && userBoard[x][y-1] == '-') count++;
+        if(!downEdge && userBoard[x+1][y] == '-') count++;
+        if(!rightEdge && userBoard[x][y+1] == '-') count++;
+        if(!upEdge && !leftEdge && userBoard[x-1][y-1] == '-') count++;
+        if(!upEdge && !rightEdge && userBoard[x-1][y+1] == '-') count++;
+        if(!downEdge && !leftEdge && userBoard[x+1][y-1] == '-') count++;
+        if(!downEdge && !rightEdge && userBoard[x+1][y+1]  == '-') count++;
+
+        return count;
+    } 
+
     public int countTruesAround(boolean[][] arr, int x, int y){
 
         int count = 0;

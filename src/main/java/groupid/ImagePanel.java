@@ -151,6 +151,7 @@ public class ImagePanel extends JPanel {
             Image custom_delete2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\custom_delete2.jpg")).getImage();
             Image custom_deleteAll2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\custom_deleteAll2.jpg")).getImage();
 
+            Image gameOverMine = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\gameOverMine.jpg")).getImage();
 
 
             imageList.add(tile_0);
@@ -252,6 +253,8 @@ public class ImagePanel extends JPanel {
             imageList.add(custom_push2);
             imageList.add(custom_delete2);
             imageList.add(custom_deleteAll2);
+
+            imageList.add(gameOverMine);
         
         } catch (Exception e) {
 
@@ -260,7 +263,7 @@ public class ImagePanel extends JPanel {
     }
 
     @Override
-        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 88
+        public void paintComponent(Graphics g) {        //! EN SON EKLENEN INDEX = 89
 
             super.paintComponent(g);
 
@@ -557,6 +560,10 @@ public class ImagePanel extends JPanel {
                 else if(this.imageHash.equals("custom_deleteAll2")){
 
                     g.drawImage(imageList.get(88), 0, 0, getWidth(), getHeight(), this);
+                }
+                else if(this.imageHash.equals("gameOverMine")){
+
+                    g.drawImage(imageList.get(89), 0, 0, getWidth(), getHeight(), this);
                 }
                 else{
                 }

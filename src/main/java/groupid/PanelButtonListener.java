@@ -232,7 +232,7 @@ public class PanelButtonListener implements MouseInputListener {
                     }
                     else{
 
-                        mainFrame.rightLabelStr = mainFrame.rightLabelStr.substring(0, mainFrame.leftLabelStr.length() - 1);
+                        mainFrame.rightLabelStr = mainFrame.rightLabelStr.substring(0, mainFrame.rightLabelStr.length() - 1);
                     }
                 }
 

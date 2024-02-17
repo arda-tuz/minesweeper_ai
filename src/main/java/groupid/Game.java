@@ -9,6 +9,7 @@ import java.util.*;
  * En son obje yok olurken o panelide temizleyecek 
  * 
 */
+//! NOT:    custom denerken    40 x 40 ve mineCount = 300 ile dene 
 
 public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface olarak duracak
 
@@ -812,6 +813,8 @@ public class Game { //  bu obje asil game olacak Ai ile gui arasinda interface o
                     }
                 }
             }
+
+            tileBoard[x][y].imageHash = "gameOverMine";
             
             this.gamePlayGridPanel.repaint();
             this.isGameOver = true;
