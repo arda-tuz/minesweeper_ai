@@ -50,6 +50,7 @@ public class ImagePanel extends JPanel {
 
         try {
 
+            //?===================================================================================================================================
             Image tile_0 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_0.png")).getImage();
             Image tile_1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_1.png")).getImage();
             Image tile_2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_2.png")).getImage();
@@ -152,7 +153,110 @@ public class ImagePanel extends JPanel {
             Image custom_deleteAll2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\custom_deleteAll2.jpg")).getImage();
 
             Image gameOverMine = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\gameOverMine.jpg")).getImage();
+            //?===================================================================================================================================
+            // Image tile_0 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_0.png")).getImage();
+            // Image tile_1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_1.png")).getImage();
+            // Image tile_2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_2.png")).getImage();
+            // Image tile_3 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_3.png")).getImage();
+            // Image tile_4 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_4.png")).getImage();
+            // Image tile_5 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_5.png")).getImage();
+            // Image tile_6 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_6.png")).getImage();
+            // Image tile_7 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_7.png")).getImage();
+            // Image tile_8 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_8.png")).getImage();
+            // Image tile_closed = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_closed.png")).getImage();
+            // Image tile_flag = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_flag.png")).getImage();
+            // Image tile_mine = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\tile_mine.png")).getImage();
+            // Image orange = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\orange.png")).getImage();
+            // Image imageCyan = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\cyan.jpg")).getImage();
+            // Image mainMenu = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\mainMenu.jpg")).getImage();
+            // Image whiteBlue = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\whiteBlue.png")).getImage();
 
+            // Image brain = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\brain.jpg")).getImage();
+            // Image dice = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\dice.jpg")).getImage();
+            // Image arrow = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\arrow.jpg")).getImage();
+            // Image clock1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock1.jpg")).getImage();
+            // Image clock2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock2.jpg")).getImage();
+            // Image clock3 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock3.jpg")).getImage();
+            // Image clock4 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock4.jpg")).getImage();
+            // Image clock5 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock5.jpg")).getImage();
+            // Image clock6 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock6.jpg")).getImage();
+            // Image clock7 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock7.jpg")).getImage();
+            // Image clock8 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock8.jpg")).getImage();
+            // Image clock9 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock9.jpg")).getImage();
+            // Image clock10 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock10.jpg")).getImage();
+            // Image clock11 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock11.jpg")).getImage();
+            // Image clock12 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\clock12.jpg")).getImage();
+
+            // Image mineCounter = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\mineCounter.jpg")).getImage();
+            // Image whiteBorder = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\whiteBorder.jpg")).getImage();
+            // Image blackBorder = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\blackBorder.jpg")).getImage();   
+
+            // Image peekMine = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\peekMine.jpg")).getImage();
+            // Image youWin = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\youWin.jpg")).getImage(); 
+            // Image youLose = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\youLose.jpg")).getImage();    
+
+            // Image quitMessage = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\quitMessage.jpg")).getImage();
+            // Image yellowPointer = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\yellowPointer.jpg")).getImage(); 
+            // Image yellowTik = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\yellowTik.jpg")).getImage();
+            // Image yellow0 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\yellow0.jpg")).getImage();
+            // Image yellow1 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\yellow1.jpg")).getImage(); 
+            // Image yellow2 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\yellow2.jpg")).getImage();
+            // Image yellow3 = new ImageIcon(mainFrame.fixPath("src\\main\\resources\\yellow3.jpg")).getImage();
+            // Image yellow4 = new ImageIcon(mainFrame.fixPath("yellow4.jpg")).getImage(); 
+            // Image yellow5 = new ImageIcon(mainFrame.fixPath("yellow5.jpg")).getImage();
+            // Image yellow6 = new ImageIcon(mainFrame.fixPath("yellow6.jpg")).getImage();
+            // Image yellow7 = new ImageIcon(mainFrame.fixPath("yellow7.jpg")).getImage(); 
+            // Image yellow8 = new ImageIcon(mainFrame.fixPath("yellow8.jpg")).getImage();
+            // Image yellow9 = new ImageIcon(mainFrame.fixPath("yellow9.jpg")).getImage();
+
+            // Image mainMenuBlue = new ImageIcon(mainFrame.fixPath("mainMenuBlue.png")).getImage();
+            // Image greenM = new ImageIcon(mainFrame.fixPath("greenM.jpg")).getImage();
+            // Image greenF = new ImageIcon(mainFrame.fixPath("greenF.jpg")).getImage();
+
+            // Image startOpenIcon = new ImageIcon(mainFrame.fixPath("startOpenIcon.jpg")).getImage();
+            // Image startClosedIcon = new ImageIcon(mainFrame.fixPath("startClosedIcon.jpg")).getImage();
+            // Image restartIcon = new ImageIcon(mainFrame.fixPath("restartIcon.jpg")).getImage();
+            // Image eyeOpenIcon = new ImageIcon(mainFrame.fixPath("eyeOpenIcon.jpg")).getImage();
+            // Image eyeClosedIcon = new ImageIcon(mainFrame.fixPath("eyeClosedIcon.jpg")).getImage();
+            // Image menuIcon = new ImageIcon(mainFrame.fixPath("menuIcon.jpg")).getImage();
+
+            // Image whiteBlueDarker1 = new ImageIcon(mainFrame.fixPath("whiteBlueDarker1.png")).getImage();
+            // Image startOpenIcon2 = new ImageIcon(mainFrame.fixPath("startOpenIcon2.jpg")).getImage();
+            // Image startClosedIcon2 = new ImageIcon(mainFrame.fixPath("startClosedIcon2.jpg")).getImage();
+            // Image restartIcon2 = new ImageIcon(mainFrame.fixPath("restartIcon2.jpg")).getImage();
+            // Image eyeOpenIcon2 = new ImageIcon(mainFrame.fixPath("eyeOpenIcon2.jpg")).getImage();
+            // Image eyeClosedIcon2 = new ImageIcon(mainFrame.fixPath("eyeClosedIcon2.jpg")).getImage();
+            // Image menuIcon2 = new ImageIcon(mainFrame.fixPath("menuIcon2.jpg")).getImage();
+
+            // Image clock0 = new ImageIcon(mainFrame.fixPath("clock0.jpg")).getImage();
+            // Image windowsIcon1 = new ImageIcon(mainFrame.fixPath("windowsIcon1.jpg")).getImage();
+            // Image windowsIcon2 = new ImageIcon(mainFrame.fixPath("windowsIcon2.jpg")).getImage();
+            // Image customIcon1 = new ImageIcon(mainFrame.fixPath("customIcon1.jpg")).getImage();
+            // Image customIcon2 = new ImageIcon(mainFrame.fixPath("customIcon2.jpg")).getImage();
+            // Image peekFlag = new ImageIcon(mainFrame.fixPath("peekFlag.jpg")).getImage();
+
+            // Image green0 = new ImageIcon(mainFrame.fixPath("green0.jpg")).getImage();
+            // Image green1 = new ImageIcon(mainFrame.fixPath("green1.jpg")).getImage();
+            // Image green2 = new ImageIcon(mainFrame.fixPath("green2.jpg")).getImage();
+            // Image green3 = new ImageIcon(mainFrame.fixPath("green3.jpg")).getImage();
+            // Image green4 = new ImageIcon(mainFrame.fixPath("green4.jpg")).getImage();
+            // Image green5 = new ImageIcon(mainFrame.fixPath("green5.jpg")).getImage();
+            // Image green6 = new ImageIcon(mainFrame.fixPath("green6.jpg")).getImage();
+            // Image green7 = new ImageIcon(mainFrame.fixPath("green7.jpg")).getImage();
+            // Image green8 = new ImageIcon(mainFrame.fixPath("green8.jpg")).getImage();
+            // Image green9 = new ImageIcon(mainFrame.fixPath("green9.jpg")).getImage();
+
+            // Image bluePointer = new ImageIcon(mainFrame.fixPath("bluePointer.jpg")).getImage();
+            // Image redPointer = new ImageIcon(mainFrame.fixPath("redPointer.jpg")).getImage();
+            // Image custom_delete1 = new ImageIcon(mainFrame.fixPath("custom_delete.jpg")).getImage();
+            // Image custom_deleteAll1 = new ImageIcon(mainFrame.fixPath("custom_deleteAll.jpg")).getImage();
+
+            // Image custom_push2 = new ImageIcon(mainFrame.fixPath("custom_push2.jpg")).getImage();
+            // Image custom_delete2 = new ImageIcon(mainFrame.fixPath("custom_delete2.jpg")).getImage();
+            // Image custom_deleteAll2 = new ImageIcon(mainFrame.fixPath("custom_deleteAll2.jpg")).getImage();
+
+            // Image gameOverMine = new ImageIcon(mainFrame.fixPath("gameOverMine.jpg")).getImage();
+            //?===================================================================================================================================
 
             imageList.add(tile_0);
             imageList.add(tile_1);

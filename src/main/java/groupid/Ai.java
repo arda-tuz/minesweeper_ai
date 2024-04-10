@@ -55,7 +55,7 @@ public class Ai extends SwingWorker<Void, String>{
             gameInterface.ThreadDiceSetMode("dice");
             System.out.println();
             System.out.println();
-            System.out.println("=========================================================================================================== FIRST_MOVE");
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ FIRST_MOVE");
             gameInterface.openTile((gameInterface.getSatirSize() - 1) / 2, (gameInterface.getSutunSize() - 1) / 2);
             this.isAiFirstMove = false;
         }
