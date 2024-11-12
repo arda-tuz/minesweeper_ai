@@ -11,8 +11,6 @@ This project implements a Minesweeper solver that leverages a constraint satisfa
 - Intelligent AI solver using CSP and backtracking
 - GUI implementation using Java Swing and AWT
 
-![Pause Menu](./images/pause_menu.png)
-
 ## Game Configurations
 The typical board configurations include:
 - Beginner: 9 × 9 board with 10 mines
